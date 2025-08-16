@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
@@ -12,78 +13,17 @@ import {
   MoreVertical
 } from 'lucide-react';
 
+import { getWorkouts, initializeWorkouts } from '../services/workoutService';
+import { Workout } from '../services/types';
+
+//export const Workouts: React.FC = () => {
+  
+
 export const Workouts: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('all');
-
-  const workouts = [
-    {
-      id: 1,
-      name: 'Upper Body Blast',
-      type: 'Strength',
-      duration: 45,
-      exercises: 8,
-      calories: 320,
-      difficulty: 'Intermediate',
-      lastPerformed: '2 days ago',
-      image: 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=400'
-    },
-    {
-      id: 2,
-      name: 'HIIT Cardio Burn',
-      type: 'Cardio',
-      duration: 30,
-      exercises: 6,
-      calories: 280,
-      difficulty: 'Advanced',
-      lastPerformed: '1 day ago',
-      image: 'https://images.pexels.com/photos/4162449/pexels-photo-4162449.jpeg?auto=compress&cs=tinysrgb&w=400'
-    },
-    {
-      id: 3,
-      name: 'Leg Day Power',
-      type: 'Strength',
-      duration: 60,
-      exercises: 10,
-      calories: 400,
-      difficulty: 'Advanced',
-      lastPerformed: '3 days ago',
-      image: 'https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=400'
-    },
-    {
-      id: 4,
-      name: 'Core & Flexibility',
-      type: 'Flexibility',
-      duration: 25,
-      exercises: 5,
-      calories: 150,
-      difficulty: 'Beginner',
-      lastPerformed: '1 week ago',
-      image: 'https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg?auto=compress&cs=tinysrgb&w=400'
-    },
-    {
-      id: 5,
-      name: 'Full Body Circuit',
-      type: 'Circuit',
-      duration: 40,
-      exercises: 12,
-      calories: 350,
-      difficulty: 'Intermediate',
-      lastPerformed: '5 days ago',
-      image: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=400'
-    },
-    {
-      id: 6,
-      name: 'Morning Yoga Flow',
-      type: 'Flexibility',
-      duration: 35,
-      exercises: 8,
-      calories: 120,
-      difficulty: 'Beginner',
-      lastPerformed: 'Never',
-      image: 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400'
-    }
-  ];
+  const navigate = useNavigate();
+  const [workouts] = useState<Workout[]>(getWorkouts());
 
   const workoutTypes = ['all', 'Strength', 'Cardio', 'Flexibility', 'Circuit'];
 
@@ -119,7 +59,7 @@ export const Workouts: React.FC = () => {
           <h1 className="text-3xl font-bold text-gray-900">My Workouts</h1>
           <p className="text-gray-600 mt-1">Choose a workout to get started</p>
         </div>
-        <Button icon={Plus}>Create Workout</Button>
+        <Button icon={Plus} onClick={() => navigate('/app/workouts/new')}>Create Workout</Button>
       </div>
 
       {/* Search and Filter */}
@@ -194,11 +134,15 @@ export const Workouts: React.FC = () => {
               </div>
               
               <div className="text-sm text-gray-600 mb-4">
-                <p>{workout.exercises} exercises</p>
+                <p>{workout.exercises.length} exercises</p>
                 <p>Last performed: {workout.lastPerformed}</p>
               </div>
               
-              <Button className="w-full" icon={Play}>
+              <Button 
+                className="w-full" 
+                icon={Play}
+                onClick={() => navigate(`/app/workouts/${workout.id}`)}
+              >
                 Start Workout
               </Button>
             </div>
@@ -215,7 +159,7 @@ export const Workouts: React.FC = () => {
           <p className="text-gray-600 mb-4">
             Try adjusting your search or filter criteria
           </p>
-          <Button>Create New Workout</Button>
+          <Button onClick={() => navigate('/app/workouts/new')}>Create New Workout</Button>
         </Card>
       )}
     </div>

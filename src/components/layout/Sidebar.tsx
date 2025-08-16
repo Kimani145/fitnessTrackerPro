@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { 
   Home, 
   Dumbbell, 
@@ -12,30 +13,21 @@ import {
 
 interface SidebarProps {
   isOpen: boolean;
-  activeTab: string;
-  onTabChange: (tab: string) => void;
   setSidebarOpen: (isOpen: boolean) => void;
 }
 
 const menuItems = [
-  { id: 'dashboard', label: 'Dashboard', icon: Home },
-  { id: 'workouts', label: 'Workouts', icon: Dumbbell },
-  { id: 'progress', label: 'Progress', icon: TrendingUp },
-  { id: 'calendar', label: 'Calendar', icon: Calendar },
-  { id: 'goals', label: 'Goals', icon: Target },
-  { id: 'achievements', label: 'Achievements', icon: Award },
-  { id: 'social', label: 'Social', icon: Users },
-  { id: 'settings', label: 'Settings', icon: Settings },
+  { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/app/dashboard' },
+  { id: 'workouts', label: 'Workouts', icon: Dumbbell, path: '/app/workouts' },
+  { id: 'progress', label: 'Progress', icon: TrendingUp, path: '/app/progress' },
+  { id: 'calendar', label: 'Calendar', icon: Calendar, path: '/app/calendar' },
+  { id: 'goals', label: 'Goals', icon: Target, path: '/app/goals' },
+  { id: 'achievements', label: 'Achievements', icon: Award, path: '/app/achievements' },
+  { id: 'social', label: 'Social', icon: Users, path: '/app/social' },
+  { id: 'settings', label: 'Settings', icon: Settings, path: '/app/settings' },
 ];
 
-export const Sidebar: React.FC<SidebarProps> = ({ isOpen, activeTab, onTabChange, setSidebarOpen }) => {
-  console.log('Sidebar render - isOpen:', isOpen, 'activeTab:', activeTab);
-
-  const handleMenuClick = (itemId: string) => {
-    console.log('Menu item clicked:', itemId);
-    onTabChange(itemId);
-  };
-
+export const Sidebar: React.FC<SidebarProps> = ({ isOpen, setSidebarOpen }) => {
   return (
     <>
       <aside className={`
@@ -52,13 +44,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, activeTab, onTabChange
           <nav className="flex-1 px-4 py-6 space-y-2">
             {menuItems.map((item) => {
               const Icon = item.icon;
-              const isActive = activeTab === item.id;
               
               return (
-                <button
+                <NavLink
                   key={item.id}
-                  onClick={() => handleMenuClick(item.id)}
-                  className={`
+                  to={item.path}
+                  onClick={() => setSidebarOpen(false)}
+                  className={({ isActive }) => `
                     w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors duration-200
                     ${isActive 
                       ? 'bg-blue-600 text-white' 
@@ -68,7 +60,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, activeTab, onTabChange
                 >
                   <Icon className="w-5 h-5 mr-3" />
                   {item.label}
-                </button>
+                </NavLink>
               );
             })}
           </nav>

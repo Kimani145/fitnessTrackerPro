@@ -1,46 +1,45 @@
-//import React from 'react';
-import { useState, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { FitnessApp } from './components/FitnessApp';
+import { useState, useEffect } from 'react';
 
 function App() {
-  const [currentView, setCurrentView] = useState<'home' | 'app'>('home');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // Debug logging
-  console.log('App render - currentView:', currentView, 'isLoggedIn:', isLoggedIn);
-
-  // Simulate checking for existing session
   useEffect(() => {
     const hasSession = localStorage.getItem('fittrack_session');
-    console.log('Checking session:', hasSession);
     if (hasSession) {
       setIsLoggedIn(true);
-      setCurrentView('app');
     }
+    setLoading(false);
   }, []);
 
   const handleLogin = () => {
-    console.log('handleLogin called');
-    // Simulate login
     localStorage.setItem('fittrack_session', 'true');
     setIsLoggedIn(true);
-    setCurrentView('app');
   };
 
   const handleLogout = () => {
-    console.log('handleLogout called');
     localStorage.removeItem('fittrack_session');
     setIsLoggedIn(false);
-    setCurrentView('home');
   };
 
-  if (currentView === 'home' && !isLoggedIn) {
-    return <Home onGetStarted={handleLogin} />;
+  if (loading) {
+    return <div>Loading...</div>; // Or a proper spinner component
   }
 
   return (
-    <FitnessApp onLogout={handleLogout} />
+      <Routes>
+        <Route 
+          path="/"
+          element={!isLoggedIn ? <Home onGetStarted={handleLogin} /> : <Navigate to="/app/dashboard" />}
+        />
+        <Route 
+          path="/app/*"
+          element={isLoggedIn ? <FitnessApp onLogout={handleLogout} /> : <Navigate to="/" />}
+        />
+      </Routes>
   );
 }
 

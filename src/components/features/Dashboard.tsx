@@ -12,11 +12,10 @@ import {
   Plus
 } from 'lucide-react';
 
-interface DashboardProps {
-  onNavigate: (tab: string) => void;
-}
+import { useNavigate } from 'react-router-dom';
 
-export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
+export const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const stats = [
     { label: 'Workouts This Week', value: '4', icon: Calendar, color: 'text-blue-600' },
     { label: 'Current Streak', value: '12 days', icon: Flame, color: 'text-orange-600' },
@@ -43,7 +42,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           <h1 className="text-3xl font-bold text-gray-900">Welcome back, John!</h1>
           <p className="text-gray-600 mt-1">Ready to crush your fitness goals today?</p>
         </div>
-        <Button icon={Plus} onClick={() => onNavigate('workouts')}>Start Workout</Button>
+        <Button icon={Plus} onClick={() => navigate('/app/workouts')}>Start Workout</Button>
       </div>
 
       {/* Stats Grid */}
@@ -67,7 +66,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         <Card>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Recent Workouts</h2>
-            <Button variant="ghost" size="sm" onClick={() => onNavigate('workouts')}>View All</Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate('/app/workouts')}>View All</Button>
           </div>
           <div className="space-y-4">
             {recentWorkouts.map((workout, index) => (
@@ -86,7 +85,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         <Card>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-semibold text-gray-900">Goal Progress</h2>
-            <Button variant="ghost" size="sm" icon={Target} onClick={() => onNavigate('goals')}>Manage</Button>
+            <Button variant="ghost" size="sm" icon={Target} onClick={() => navigate('/app/progress')}>Manage</Button>
           </div>
           <div className="space-y-6">
             {goals.map((goal, index) => (
@@ -112,19 +111,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
       <Card>
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Button variant="outline" className="h-20 flex-col" onClick={() => onNavigate('workouts')}>
+          <Button variant="outline" className="h-20 flex-col" onClick={() => navigate('/app/workouts')}>
             <Plus className="w-6 h-6 mb-2" />
             New Workout
           </Button>
-          <Button variant="outline" className="h-20 flex-col" onClick={() => onNavigate('progress')}>
+          <Button variant="outline" className="h-20 flex-col" onClick={() => navigate('/app/progress')}>
             <TrendingUp className="w-6 h-6 mb-2" />
             Log Progress
           </Button>
-          <Button variant="outline" className="h-20 flex-col" onClick={() => onNavigate('goals')}>
+          <Button variant="outline" className="h-20 flex-col" onClick={() => navigate('/app/progress')}>
             <Target className="w-6 h-6 mb-2" />
             Set Goal
           </Button>
-          <Button variant="outline" className="h-20 flex-col" onClick={() => onNavigate('calendar')}>
+          <Button variant="outline" className="h-20 flex-col" onClick={() => navigate('/app/workouts')}>
             <Calendar className="w-6 h-6 mb-2" />
             Schedule
           </Button>

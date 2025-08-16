@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import { Header } from './layout/Header';
 import { Sidebar } from './layout/Sidebar';
 import { Dashboard } from './features/Dashboard';
-import { Workouts } from './features/Workouts';
+import { Workouts } from './features/Workouts'; // Keep this import
 import { Progress } from './features/Progress';
+import  WorkoutDetail from './features/WorkoutDetail';
+import { CreateWorkoutPage } from './features/CreateWorkoutPage';
+import WorkoutSession from './features/WorkoutSession';
 
 interface FitnessAppProps {
   onLogout: () => void;
@@ -11,47 +15,13 @@ interface FitnessAppProps {
 
 export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('dashboard');
 
-  // Debug logging
-  console.log('FitnessApp render - activeTab:', activeTab, 'sidebarOpen:', sidebarOpen);
-
-  const handleTabChange = (tab: string) => {
-    console.log('Tab change requested:', tab);
-    setActiveTab(tab);
-    setSidebarOpen(false); // Close sidebar on mobile after selection
-  };
-
-  const renderContent = () => {
-    console.log('Rendering content for tab:', activeTab);
-    switch (activeTab) {
-      case 'dashboard':
-        return <Dashboard onNavigate={handleTabChange} />;
-      case 'workouts':
-        return <Workouts onNavigate={handleTabChange} />;
-      case 'progress':
-        return <Progress />;
-      case 'calendar':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900">Calendar Coming Soon</h2></div>;
-      case 'goals':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900">Goals Coming Soon</h2></div>;
-      case 'achievements':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900">Achievements Coming Soon</h2></div>;
-      case 'social':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900">Social Features Coming Soon</h2></div>;
-      case 'settings':
-        return <div className="text-center py-12"><h2 className="text-2xl font-bold text-gray-900">Settings Coming Soon</h2></div>;
-      default:
-        return <Dashboard onNavigate={handleTabChange} />;
-    }
-  };
+  
 
   return (
     <div className="min-h-screen bg-gray-50 flex">
       <Sidebar 
         isOpen={sidebarOpen} 
-        activeTab={activeTab} 
-        onTabChange={handleTabChange}
         setSidebarOpen={setSidebarOpen}
       />
       
@@ -62,7 +32,15 @@ export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout }) => {
         />
         
         <main className="p-6 flex-1 overflow-y-auto">
-          {renderContent()}
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/app/dashboard" element={<Dashboard />} />
+            <Route path="/app/workouts" element={<Workouts />} />
+            <Route path="/app/workouts/:id" element={<WorkoutDetail />} />
+            <Route path="/app/workouts/new" element={<CreateWorkoutPage />} />
+            <Route path="/app/workouts/session/:id" element={<WorkoutSession />} />
+            <Route path="/app/progress" element={<Progress />} />
+          </Routes>
         </main>
       </div>
     </div>
