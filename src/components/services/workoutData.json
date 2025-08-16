@@ -1,0 +1,233 @@
+{
+  "workouts": [
+    {
+      "id": 1,
+      "name": "Upper Body Blast",
+      "type": "Strength",
+      "description": "Comprehensive upper body workout targeting chest, shoulders, and arms.",
+      "duration": 45,
+      "calories": 320,
+      "difficulty": "Intermediate",
+      "lastPerformed": "2023-05-15",
+      "image": "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg",
+      "exercises": [
+        {
+          "name": "Bench Press",
+          "sets": 3,
+          "reps": 10,
+          "weight": "135 lbs",
+          "rest": 60,
+          "notes": "Flat bench, focus on control"
+        },
+        {
+          "name": "Shoulder Press",
+          "sets": 3,
+          "reps": 12,
+          "weight": "50 lbs",
+          "rest": 45,
+          "notes": "Dumbbells, seated position"
+        },
+        {
+          "name": "Bent Over Rows",
+          "sets": 3,
+          "reps": 12,
+          "weight": "95 lbs",
+          "rest": 60,
+          "notes": "Barbell, maintain flat back"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "HIIT Cardio Burn",
+      "type": "Cardio",
+      "description": "High intensity interval training for maximum calorie burn.",
+      "duration": 30,
+      "calories": 280,
+      "difficulty": "Advanced",
+      "lastPerformed": "2023-05-16",
+      "image": "https://images.pexels.com/photos/4162449/pexels-photo-4162449.jpeg",
+      "exercises": [
+        {
+          "name": "Burpees",
+          "sets": 4,
+          "reps": 15,
+          "rest": 30,
+          "notes": "Full range motion"
+        },
+        {
+          "name": "Jump Squats",
+          "sets": 4,
+          "reps": 20,
+          "rest": 30,
+          "notes": "Explosive jumps"
+        },
+        {
+          "name": "Mountain Climbers",
+          "sets": 4,
+          "duration": "45 sec",
+          "rest": 30,
+          "notes": "Fast pace"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Leg Day Power",
+      "type": "Strength",
+      "description": "Intense lower body workout for strength and endurance.",
+      "duration": 60,
+      "calories": 400,
+      "difficulty": "Advanced",
+      "lastPerformed": "2023-05-13",
+      "image": "https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg",
+      "exercises": [
+        {
+          "name": "Barbell Squats",
+          "sets": 4,
+          "reps": 8,
+          "weight": "185 lbs",
+          "rest": 90,
+          "notes": "Deep squats, controlled"
+        },
+        {
+          "name": "Romanian Deadlifts",
+          "sets": 3,
+          "reps": 10,
+          "weight": "135 lbs",
+          "rest": 75,
+          "notes": "Focus on hamstrings"
+        },
+        {
+          "name": "Walking Lunges",
+          "sets": 3,
+          "reps": 12,
+          "weight": "40 lbs",
+          "rest": 60,
+          "notes": "Dumbbells, full range"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Core & Flexibility",
+      "type": "Flexibility",
+      "description": "Core strengthening and flexibility routine.",
+      "duration": 25,
+      "calories": 150,
+      "difficulty": "Beginner",
+      "lastPerformed": "2023-05-09",
+      "image": "https://images.pexels.com/photos/3822906/pexels-photo-3822906.jpeg",
+      "exercises": [
+        {
+          "name": "Plank",
+          "sets": 3,
+          "duration": "60 sec",
+          "rest": 30,
+          "notes": "Engage core"
+        },
+        {
+          "name": "Russian Twists",
+          "sets": 3,
+          "reps": 20,
+          "weight": "10 lbs",
+          "rest": 30,
+          "notes": "Slow and controlled"
+        },
+        {
+          "name": "Cobra Stretch",
+          "sets": 3,
+          "duration": "30 sec",
+          "rest": 15,
+          "notes": "Deep stretch"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Full Body Circuit",
+      "type": "Circuit",
+      "description": "Complete full body workout in circuit format.",
+      "duration": 40,
+      "calories": 350,
+      "difficulty": "Intermediate",
+      "lastPerformed": "2023-05-11",
+      "image": "https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg",
+      "exercises": [
+        {
+          "name": "Push-ups",
+          "sets": 3,
+          "reps": 15,
+          "rest": 30,
+          "notes": "Full range"
+        },
+        {
+          "name": "Bodyweight Squats",
+          "sets": 3,
+          "reps": 20,
+          "rest": 30,
+          "notes": "Deep squat"
+        },
+        {
+          "name": "Pull-ups",
+          "sets": 3,
+          "reps": "AMRAP",
+          "rest": 45,
+          "notes": "Assisted if needed"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Morning Yoga Flow",
+      "type": "Flexibility",
+      "description": "Gentle yoga routine to start your day.",
+      "duration": 15,
+      "calories": 120,
+      "difficulty": "Beginner",
+      "lastPerformed": null,
+      "image": "https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg",
+      "exercises": [
+        {
+          "name": "Sun Salutation A",
+          "sets": 3,
+          "duration": "2 min",
+          "rest": 15,
+          "notes": "Flow smoothly"
+        },
+        {
+          "name": "Downward Dog",
+          "sets": 3,
+          "duration": "45 sec",
+          "rest": 15,
+          "notes": "Heels down"
+        },
+        {
+          "name": "Child's Pose",
+          "sets": 3,
+          "duration": "1 min",
+          "rest": 15,
+          "notes": "Deep breathing"
+        }
+      ]
+    }
+  ],
+  "exerciseLibrary": [
+    {
+      "id": 1,
+      "name": "Bench Press",
+      "category": "Strength",
+      "muscleGroups": ["Chest", "Triceps", "Shoulders"],
+      "equipment": "Barbell",
+      "difficulty": "Intermediate"
+    },
+    {
+      "id": 2,
+      "name": "Burpees",
+      "category": "Cardio",
+      "muscleGroups": ["Full Body"],
+      "equipment": "Bodyweight",
+      "difficulty": "Advanced"
+    }
+  ]
+}
