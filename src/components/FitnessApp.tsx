@@ -35,11 +35,11 @@ export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout }) => {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/app/workouts" element={<Workouts />} />
-            <Route path="/app/workouts/:id" element={<WorkoutDetail />} />
-            <Route path="/app/workouts/new" element={<CreateWorkoutPage />} />
-            <Route path="/app/workouts/session/:id" element={<WorkoutSession />} />
-            <Route path="/app/progress" element={<Progress />} />
+            <Route path="/workouts" element={<Workouts />} />
+            <Route path="/workouts/:id" element={<WorkoutDetail />} />
+            <Route path="/workouts/new" element={<CreateWorkoutPage />} />
+            <Route path="/workouts/session/:id" element={<WorkoutSession />} />
+            <Route path="/progress" element={<Progress />} />
           </Routes>
         </main>
       </div>
