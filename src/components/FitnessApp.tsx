@@ -33,7 +33,7 @@ export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout }) => {
         
         <main className="p-6 flex-1 overflow-y-auto">
           <Routes>
-            <Route path="./" element={<Dashboard />} />
+            <Route path="" element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="workouts" element={<Workouts />} />
             <Route path="workouts/:id" element={<WorkoutDetail />} />
