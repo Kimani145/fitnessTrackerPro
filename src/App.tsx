@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
     const hasSession = localStorage.getItem('fittrack_session');
@@ -14,6 +15,15 @@ function App() {
     }
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const handleLogin = () => {
     localStorage.setItem('fittrack_session', 'true');
@@ -37,7 +47,7 @@ function App() {
         />
         <Route 
           path="/app/*"
-          element={isLoggedIn ? <FitnessApp onLogout={handleLogout} /> : <Navigate to="/" />}
+          element={isLoggedIn ? <FitnessApp onLogout={handleLogout} theme={theme} setTheme={setTheme} /> : <Navigate to="/" />}
         />
       </Routes>
   );

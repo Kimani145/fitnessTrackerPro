@@ -1,3 +1,5 @@
+import { Event } from "react-big-calendar";
+
 export interface Workout {
   id: number;
   name: string;
@@ -21,4 +23,23 @@ export interface ExerciseDetail {
   weight?: string;
   rest: number;
   notes: string;
+}
+
+
+export interface Goal {
+  id: string;
+  title: string;
+  type: 'Weight' | 'Workout Frequency' | 'Performance';
+  target: number;
+  current: number;
+  unit: string;
+  completed: boolean;
+  createdAt: string;
+  completedAt?: string;
+}
+
+export interface ScheduledWorkout extends Event {
+  id: string;
+  workoutId: number;
+  recurring: boolean;
 }

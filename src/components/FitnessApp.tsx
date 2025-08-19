@@ -3,23 +3,30 @@ import { Routes, Route } from 'react-router-dom';
 import { Header } from './layout/Header';
 import { Sidebar } from './layout/Sidebar';
 import { Dashboard } from './features/Dashboard';
-import { Workouts } from './features/Workouts'; // Keep this import
+import { Workouts } from './features/Workouts';
 import { Progress } from './features/Progress';
 import  WorkoutDetail from './features/WorkoutDetail';
 import { CreateWorkoutPage } from './features/CreateWorkoutPage';
 import WorkoutSession from './features/WorkoutSession';
+import  Settings from './features/Settings';
+import { Goals } from './features/Goals';
+import { Schedule } from './features/Schedule';
+import Achievements from './features/Achievements';
+import Social from './features/Social';
 
 interface FitnessAppProps {
   onLogout: () => void;
+  theme: string;
+  setTheme: (theme: string) => void;
 }
 
-export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout }) => {
+export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout, theme, setTheme }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex dark:bg-gray-900">
       <Sidebar 
         isOpen={sidebarOpen} 
         setSidebarOpen={setSidebarOpen}
@@ -40,6 +47,11 @@ export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout }) => {
             <Route path="workouts/create" element={<CreateWorkoutPage />} />
             <Route path="workouts/session/:id" element={<WorkoutSession />} />
             <Route path="progress" element={<Progress />} />
+            <Route path="settings" element={<Settings theme={theme} setTheme={setTheme} />} />
+            <Route path="goals" element={<Goals />} />
+            <Route path="schedule" element={<Schedule />} />
+            <Route path="achievements" element={<Achievements />} />
+            <Route path="social" element={<Social />} />
           </Routes>
         </main>
       </div>

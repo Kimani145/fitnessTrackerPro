@@ -20,7 +20,7 @@ const menuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: Home, path: '/app/dashboard' },
   { id: 'workouts', label: 'Workouts', icon: Dumbbell, path: '/app/workouts' },
   { id: 'progress', label: 'Progress', icon: TrendingUp, path: '/app/progress' },
-  { id: 'calendar', label: 'Calendar', icon: Calendar, path: '/app/calendar' },
+  { id: 'calendar', label: 'Calendar', icon: Calendar, path: '/app/schedule' },
   { id: 'goals', label: 'Goals', icon: Target, path: '/app/goals' },
   { id: 'achievements', label: 'Achievements', icon: Award, path: '/app/achievements' },
   { id: 'social', label: 'Social', icon: Users, path: '/app/social' },
