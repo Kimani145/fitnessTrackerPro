@@ -5,18 +5,36 @@ A comprehensive fitness tracking web application built with modern fullstack tec
 ## 🚀 Quick Start
 
 ```bash
+# Make sure you have MongoDB installed and running
+# To start MongoDB, open a new terminal and run:
+sudo systemctl start mongod
+
 # Clone the repository
 git clone https://github.com/Kimani145/fitnessTrackerPro.git
 cd fittrack-pro
 
-# Install dependencies
+# Install dependencies for both frontend and backend
 npm install
+cd backend && npm install && cd ..
 
 # Set up environment variables (see .env.example)
+# For backend
+cp backend/.env.example backend/.env
+# For frontend
 cp .env.example .env
 
+
 # Start development servers
+
+# To start both servers concurrently
 npm run dev:all
+
+# To start backend server separately
+cd backend
+npm start
+
+# To start frontend server separately
+npm run dev
 ```
 
 ## 📋 Table of Contents
@@ -481,7 +499,7 @@ VITE_CLOUDINARY_UPLOAD_PRESET=your-upload-preset
 ```json
 {
   "scripts": {
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
     "build": "cd frontend && npm run build",

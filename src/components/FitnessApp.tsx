@@ -18,9 +18,10 @@ interface FitnessAppProps {
   onLogout: () => void;
   theme: string;
   setTheme: (theme: string) => void;
+  user?: any | null;
 }
 
-export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout, theme, setTheme }) => {
+export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout, theme, setTheme, user }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   
@@ -33,9 +34,10 @@ export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout, theme, setThem
       />
       
       <div className="flex-1 flex flex-col">
-        <Header 
-          onMenuClick={() => setSidebarOpen(!sidebarOpen)} 
+        <Header
+          onMenuClick={() => setSidebarOpen(!sidebarOpen)}
           onLogout={onLogout}
+          user={user}
         />
         
         <main className="p-6 flex-1 overflow-y-auto">

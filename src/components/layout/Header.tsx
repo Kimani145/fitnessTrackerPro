@@ -5,9 +5,10 @@ import { Button } from '../ui/Button';
 interface HeaderProps {
   onMenuClick: () => void;
   onLogout?: () => void;
+  user?: { name?: string } | null;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onMenuClick, onLogout }) => {
+export const Header: React.FC<HeaderProps> = ({ onMenuClick, onLogout, user }) => {
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 px-4 py-3">
       <div className="flex items-center justify-between">
@@ -38,7 +39,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, onLogout }) => {
               <User className="w-5 h-5 text-white" />
             </div>
             <span className="hidden md:block text-sm font-medium text-gray-700">
-              John Doe
+              {user && user.name ? user.name : 'Guest'}
             </span>
             {onLogout && (
               <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">

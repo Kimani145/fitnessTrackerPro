@@ -1,17 +1,25 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { Home } from './pages/Home';
 import { FitnessApp } from './components/FitnessApp';
 import { useState, useEffect } from 'react';
+import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
+import ForgotPasswordPage from './pages/ForgotPasswordPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
-    const hasSession = localStorage.getItem('fittrack_session');
-    if (hasSession) {
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
       setIsLoggedIn(true);
+      try {
+        setUser(JSON.parse(userInfo));
+      } catch (e) {
+        setUser(null);
+      }
     }
     setLoading(false);
   }, []);
@@ -26,13 +34,21 @@ function App() {
   }, [theme]);
 
   const handleLogin = () => {
-    localStorage.setItem('fittrack_session', 'true');
     setIsLoggedIn(true);
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      try {
+        setUser(JSON.parse(userInfo));
+      } catch (e) {
+        setUser(null);
+      }
+    }
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('fittrack_session');
+    localStorage.removeItem('userInfo');
     setIsLoggedIn(false);
+    setUser(null);
   };
 
   if (loading) {
@@ -43,11 +59,14 @@ function App() {
       <Routes>
         <Route 
           path="/"
-          element={!isLoggedIn ? <Home onGetStarted={handleLogin} /> : <Navigate to="/app/dashboard" />}
+          element={!isLoggedIn ? <Navigate to="/login" /> : <Navigate to="/app/dashboard" />}
         />
-        <Route 
+        <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
+        <Route path="/signup" element={<SignupPage onLogin={handleLogin} />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route
           path="/app/*"
-          element={isLoggedIn ? <FitnessApp onLogout={handleLogout} theme={theme} setTheme={setTheme} /> : <Navigate to="/" />}
+          element={isLoggedIn ? <FitnessApp user={user} onLogout={handleLogout} theme={theme} setTheme={setTheme} /> : <Navigate to="/login" />}
         />
       </Routes>
   );
