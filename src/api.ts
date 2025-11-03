@@ -1,12 +1,13 @@
+
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 export async function handleFetchResponse(res: Response) {
   const contentType = (res.headers.get('content-type') || '').toLowerCase();
 
-  // Successful responses
   if (res.ok) {
     if (contentType.includes('application/json')) {
       return res.json();
     }
-    // not JSON — try to return text (or parse JSON from text)
     const text = await res.text();
     try {
       return JSON.parse(text);
@@ -15,7 +16,6 @@ export async function handleFetchResponse(res: Response) {
     }
   }
 
-  // Error responses
   if (contentType.includes('application/json')) {
     try {
       const data = await res.json();
@@ -26,8 +26,13 @@ export async function handleFetchResponse(res: Response) {
     }
   }
 
-  // Non-JSON error (HTML or plain text) — return stripped text
   const text = await res.text();
   const stripped = text.replace(/<[^>]*>/g, '').trim();
   throw new Error(stripped || res.statusText || 'Request failed');
+}
+
+export async function apiFetch(path: string, options: RequestInit = {}) {
+  const url = `${API_URL}${path}`;
+  const res = await fetch(url, options);
+  return handleFetchResponse(res);
 }

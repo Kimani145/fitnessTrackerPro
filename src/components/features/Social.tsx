@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Alert from '../ui/Alert';
-import { handleFetchResponse } from '../services/api';
+import { handleFetchResponse } from '../../api';
 
 type Post = {
   _id: string;

@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import Alert from '../components/ui/Alert';
-import { handleFetchResponse } from '../components/services/api';
+import { apiFetch } from '../api';
 
 const SignupPage = ({ onLogin }: { onLogin?: () => void }) => {
   const [name, setName] = useState('');
@@ -20,13 +20,11 @@ const SignupPage = ({ onLogin }: { onLogin?: () => void }) => {
     setError('');
     setLoading(true);
     try {
-      const data = await handleFetchResponse(
-        await fetch('/api/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email, password }),
-        })
-      );
+      const data = await apiFetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
       localStorage.setItem('userInfo', JSON.stringify(data));
       if (onLogin) onLogin();
       navigate('/app/dashboard');

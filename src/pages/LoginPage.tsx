@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Input } from '../components/ui/Input';
 import { Button } from '../components/ui/Button';
 import Alert from '../components/ui/Alert';
-import { handleFetchResponse } from '../components/services/api';
+import { apiFetch } from '../api';
 
 const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   const [email, setEmail] = useState('');
@@ -18,13 +18,11 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
     setError('');
     setLoading(true);
     try {
-      const data = await handleFetchResponse(
-        await fetch('/api/users/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        })
-      );
+      const data = await apiFetch('/api/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
       localStorage.setItem('userInfo', JSON.stringify(data));
       if (onLogin) onLogin();
       navigate('/app/dashboard');
