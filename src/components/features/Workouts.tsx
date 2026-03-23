@@ -4,17 +4,19 @@ import { Card } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Clock, 
+  Plus,
+  Search,
+  Filter,
+  Clock,
   Flame,
   Play,
   MoreVertical
 } from 'lucide-react';
 
-import { getWorkouts, initializeWorkouts } from '../services/workoutService';
+import { getWorkouts, initializeWorkouts, setWorkouts } from '../services/workoutService';
 import { Workout } from '../services/types';
+import { getWorkoutsFromFirestore } from '../../firebase/workouts';
+import { Logger } from '../../lib/logger';
 
 //export const Workouts: React.FC = () => {
   
@@ -22,10 +24,37 @@ import { Workout } from '../services/types';
 export const Workouts: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('all');
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const [workouts] = useState<Workout[]>(getWorkouts());
+  const [workouts, setWorkoutState] = useState<Workout[]>([]);
 
-  const workoutTypes = ['all', 'Strength', 'Cardio', 'Flexibility', 'Circuit'];
+  useEffect(() => {
+    const loadWorkouts = async () => {
+      setLoading(true);
+
+      try {
+        const firestoreWorkouts = await getWorkoutsFromFirestore();
+        if (firestoreWorkouts.length > 0) {
+          setWorkoutState(firestoreWorkouts);
+          setWorkouts(firestoreWorkouts);
+          Logger.dataFetchSuccess('Firestore Workouts', { count: firestoreWorkouts.length });
+        } else {
+          initializeWorkouts();
+          setWorkoutState(getWorkouts());
+        }
+      } catch (error) {
+        Logger.dataFetchError('Firestore Workouts', error);
+        initializeWorkouts();
+        setWorkoutState(getWorkouts());
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadWorkouts();
+  }, []);
+
+  const workoutTypes = ['all', ...Array.from(new Set(workouts.map((workout) => workout.type)))];
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -52,6 +81,15 @@ export const Workouts: React.FC = () => {
     return matchesSearch && matchesFilter;
   });
 
+  if (loading) {
+    return (
+      <Card className="text-center py-12">
+        <h3 className="text-lg font-medium text-gray-900 mb-2">Loading workouts...</h3>
+        <p className="text-gray-600">Preparing your workout library from Firestore.</p>
+      </Card>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -59,7 +97,7 @@ export const Workouts: React.FC = () => {
           <h1 className="text-3xl font-bold text-gray-900">My Workouts</h1>
           <p className="text-gray-600 mt-1">Choose a workout to get started</p>
         </div>
-        <Button icon={Plus} onClick={() => navigate('/app/workouts/new')}>Create Workout</Button>
+        <Button icon={Plus} onClick={() => navigate('/app/workouts/create')}>Create Workout</Button>
       </div>
 
       {/* Search and Filter */}
@@ -159,7 +197,7 @@ export const Workouts: React.FC = () => {
           <p className="text-gray-600 mb-4">
             Try adjusting your search or filter criteria
           </p>
-          <Button onClick={() => navigate('/app/workouts/new')}>Create New Workout</Button>
+          <Button onClick={() => navigate('/app/workouts/create')}>Create New Workout</Button>
         </Card>
       )}
     </div>

@@ -31,7 +31,7 @@ export const CreateWorkoutPage: React.FC = () => {
 
   useEffect(() => {
     if (selectedTemplateId) {
-      const template = workouts.find(w => w.id === Number(selectedTemplateId));
+      const template = workouts.find((w) => String(w.id) === selectedTemplateId);
       if (template) {
         setName(`${template.name} (Copy)`);
         setDescription(template.description);

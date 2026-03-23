@@ -16,7 +16,7 @@ const WorkoutSession: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      const fetchedWorkout = getWorkoutById(parseInt(id));
+      const fetchedWorkout = getWorkoutById(id);
       setWorkout(fetchedWorkout || null);
     }
   }, [id]);

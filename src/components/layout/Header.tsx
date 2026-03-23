@@ -1,16 +1,19 @@
 import React from 'react';
 import { Dumbbell, User, Menu, Bell } from 'lucide-react';
 import { Button } from '../ui/Button';
+import { ThemeSwitcher } from '../ui/ThemeSwitcher';
 
 interface HeaderProps {
   onMenuClick: () => void;
   onLogout?: () => void;
   user?: { name?: string } | null;
+  theme?: string;
+  setTheme?: (theme: string) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onMenuClick, onLogout, user }) => {
+export const Header: React.FC<HeaderProps> = ({ onMenuClick, onLogout, user, theme = 'light', setTheme = () => {} }) => {
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 px-4 py-3">
+    <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700 px-4 py-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <Button
@@ -25,7 +28,7 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, onLogout, user }) =
           
           <div className="flex items-center space-x-2">
             <Dumbbell className="w-8 h-8 text-blue-600" />
-            <h1 className="text-xl font-bold text-gray-900">FitTrack Pro</h1>
+            <h1 className="text-xl font-bold text-gray-900 dark:text-white">FitTrack Pro</h1>
           </div>
         </div>
 
@@ -34,18 +37,20 @@ export const Header: React.FC<HeaderProps> = ({ onMenuClick, onLogout, user }) =
             <span className="sr-only">Notifications</span>
           </Button>
           
+          <ThemeSwitcher theme={theme} setTheme={setTheme} />
+          
           <div className="flex items-center space-x-2 relative group">
             <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
               <User className="w-5 h-5 text-white" />
             </div>
-            <span className="hidden md:block text-sm font-medium text-gray-700">
+            <span className="hidden md:block text-sm font-medium text-gray-700 dark:text-gray-300">
               {user && user.name ? user.name : 'Guest'}
             </span>
             {onLogout && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 border border-gray-200 dark:border-gray-700">
                 <button
                   onClick={onLogout}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Sign Out
                 </button>

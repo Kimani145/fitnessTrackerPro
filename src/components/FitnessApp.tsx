@@ -13,21 +13,25 @@ import { Goals } from './features/Goals';
 import { Schedule } from './features/Schedule';
 import Achievements from './features/Achievements';
 import Social from './features/Social';
+import { Logger } from '../lib/logger';
+import type { UserProfile } from '../firebase/auth';
 
 interface FitnessAppProps {
   onLogout: () => void;
   theme: string;
   setTheme: (theme: string) => void;
-  user?: any | null;
+  user?: UserProfile | null;
 }
 
 export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout, theme, setTheme, user }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  
+  React.useEffect(() => {
+    Logger.info('FitnessApp loaded successfully');
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       <Sidebar 
         isOpen={sidebarOpen} 
         setSidebarOpen={setSidebarOpen}
@@ -38,9 +42,11 @@ export const FitnessApp: React.FC<FitnessAppProps> = ({ onLogout, theme, setThem
           onMenuClick={() => setSidebarOpen(!sidebarOpen)}
           onLogout={onLogout}
           user={user}
+          theme={theme}
+          setTheme={setTheme}
         />
         
-        <main className="p-6 flex-1 overflow-y-auto">
+        <main className="p-6 flex-1 overflow-y-auto dark:text-gray-100">
           <Routes>
             <Route path="" element={<Dashboard />} />
             <Route path="dashboard" element={<Dashboard />} />

@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Alert from '../ui/Alert';
-import { handleFetchResponse } from '../../api';
-
-type Post = {
-  _id: string;
-  content: string;
-  createdAt: string;
-  user: { _id?: string; name?: string } | string;
-};
+import { createPost, getPosts, type SocialPost } from '../../firebase/posts';
+import { getErrorMessage } from '../../lib/errors';
 
 const Social: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<SocialPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [newPost, setNewPost] = useState('');
   const [posting, setPosting] = useState(false);
@@ -19,13 +13,10 @@ const Social: React.FC = () => {
 
   const fetchPosts = async () => {
     try {
-      const res = await fetch('/api/posts');
-      if (res.ok) {
-        const data = await res.json();
-        setPosts(data);
-      }
+      const data = await getPosts();
+      setPosts(data);
     } catch (err) {
-      console.error('Failed to fetch posts', err);
+      setErrorMsg(getErrorMessage(err, 'Failed to fetch posts.'));
     } finally {
       setLoading(false);
     }
@@ -36,31 +27,17 @@ const Social: React.FC = () => {
   }, []);
 
   const handleCreatePost = async () => {
-    const userInfo = localStorage.getItem('userInfo');
-    if (!userInfo) {
-      setErrorMsg('Please login to post.');
-      return;
-    }
     setErrorMsg('');
     setSuccessMsg('');
     setPosting(true);
+
     try {
-      const token = JSON.parse(userInfo).token;
-      await handleFetchResponse(
-        await fetch('/api/posts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ content: newPost }),
-        })
-      );
+      await createPost(newPost);
       setNewPost('');
       setSuccessMsg('Post created');
-      fetchPosts();
-    } catch (err: any) {
-      setErrorMsg(err?.message || 'Failed to create post');
+      await fetchPosts();
+    } catch (err) {
+      setErrorMsg(getErrorMessage(err, 'Failed to create post.'));
     } finally {
       setPosting(false);
     }
@@ -101,10 +78,10 @@ const Social: React.FC = () => {
             <p>Loading...</p>
           ) : (
             posts.map((p) => (
-              <div key={p._id} className="bg-white rounded-lg shadow p-4">
+              <div key={p.id} className="bg-white rounded-lg shadow p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div>
-                    <p className="font-semibold">{typeof p.user === 'string' ? 'User' : p.user?.name ?? 'User'}</p>
+                    <p className="font-semibold">{p.user?.name ?? 'User'}</p>
                     <p className="text-xs text-gray-500">{new Date(p.createdAt).toLocaleString()}</p>
                   </div>
                 </div>

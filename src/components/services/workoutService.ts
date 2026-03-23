@@ -15,9 +15,13 @@ export const getWorkouts = (): Workout[] => {
   return data ? JSON.parse(data) : [];
 };
 
-export const getWorkoutById = (id: number): Workout | undefined => {
+export const setWorkouts = (workouts: Workout[]) => {
+  localStorage.setItem(WORKOUTS_STORAGE_KEY, JSON.stringify(workouts));
+};
+
+export const getWorkoutById = (id: string | number): Workout | undefined => {
   const workouts = getWorkouts();
-  return workouts.find(workout => workout.id === id);
+  return workouts.find((workout) => String(workout.id) === String(id));
 };
 
 export const addWorkout = (workout: Omit<Workout, 'id'>) => {

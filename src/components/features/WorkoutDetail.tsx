@@ -9,8 +9,8 @@ import { Workout, ExerciseDetail as Exercise } from '../services/types';
 const WorkoutDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  
-  const workout = getWorkoutById(Number(id)); 
+
+  const workout = id ? getWorkoutById(id) : undefined;
 
   if (!workout) {
     return <div>Workout not found</div>;

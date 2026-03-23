@@ -1,7 +1,7 @@
 import { Event } from "react-big-calendar";
 
 export interface Workout {
-  id: number;
+  id: string | number;
   name: string;
   type: string;
   description: string;
